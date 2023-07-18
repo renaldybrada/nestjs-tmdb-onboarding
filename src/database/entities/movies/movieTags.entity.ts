@@ -10,10 +10,10 @@ export class MovieTags {
   @Column()
   name: string;
 
-  @ManyToOne(() => Movies, (movie) => movie.id)
+  @ManyToOne(() => Movies, (movie) => movie.movieTags)
   movies: Movies
 
-  @ManyToOne(() => Tags, (tag) => tag.id)
+  @ManyToOne(() => Tags, (tag) => tag.movieTags)
   tags: Tags
 
   @CreateDateColumn({ name: 'created_at'})

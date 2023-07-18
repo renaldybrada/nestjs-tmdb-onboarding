@@ -7,10 +7,10 @@ export class OrderItems {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Orders, (order) => order.id)
+  @ManyToOne(() => Orders, (order) => order.items)
   order: Orders
 
-  @ManyToOne(() => MovieSchedules, (movieSchedule) => movieSchedule.id)
+  @ManyToOne(() => MovieSchedules, (movieSchedule) => movieSchedule.orderItems)
   movieSchedule: MovieSchedules
 
   @Column({name: 'qty', type: 'int'})

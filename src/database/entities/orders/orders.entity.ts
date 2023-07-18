@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Users } from '../users/users.entity';
+import { OrderItems } from './orderItems.entity';
 
 export enum PaymenMethod {
     CASH = 'cash',
@@ -13,8 +14,11 @@ export class Orders {
   @PrimaryGeneratedColumn()
   id: number
 
-  @ManyToOne(() => Users, (user) => user.id)
+  @ManyToOne(() => Users, (user) => user.orders)
   user: Users
+
+  @OneToMany(() => OrderItems, (items) => items.order)
+  items: OrderItems
 
   @Column({
     name: 'payment_method',

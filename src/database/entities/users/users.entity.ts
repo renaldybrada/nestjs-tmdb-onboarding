@@ -1,15 +1,28 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { Orders } from '../orders/orders.entity';
 
 @Entity()
-export class Studios {
+export class Users {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({name: 'studio_number', type: 'int'})
-  studioNumber: number;
+  @Column()
+  name: string;
 
-  @Column({name: 'seat_capacity', type: 'int'})
-  seatCapacity: number;
+  @Column()
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  avatar: string;
+
+  @Column({ name: 'is_admin'})
+  isAdmin: boolean;
+
+  @OneToMany(() => Orders, (order) => order.user)
+  orders: Orders[]
 
   @CreateDateColumn({ name: 'created_at'})
   createdAt: Date;

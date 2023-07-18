@@ -1,25 +1,19 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
-import { MovieTags } from './movieTags.entity';
+import { MovieSchedules } from '../movies/movieSchedules.entity';
 
 @Entity()
-export class Movies {
+export class Studios {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  title: string;
+  @Column({name: 'studio_number', type: 'int'})
+  studioNumber: number;
 
-  @Column({type: 'text'})
-  overview: string;
+  @Column({name: 'seat_capacity', type: 'int'})
+  seatCapacity: number;
 
-  @Column()
-  poster: string;
-
-  @Column({ name: 'play_until'})
-  playUntil: string;
-
-  @OneToMany(() => MovieTags, (movieTags) => movieTags.movies)
-  movieTags: MovieTags[]
+  @OneToMany(() => MovieSchedules, (movieSchedule) => movieSchedule.studio)
+  movieSchedules: MovieSchedules[]
 
   @CreateDateColumn({ name: 'created_at'})
   createdAt: Date;
