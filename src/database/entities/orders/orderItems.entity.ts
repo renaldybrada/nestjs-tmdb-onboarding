@@ -1,16 +1,18 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { Orders } from './orders.entity';
 import { MovieSchedules } from '../movies/movieSchedules.entity';
+import { BaseTimestampEntity } from '../base.entity';
 
 @Entity()
-export class OrderItems {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @ManyToOne(() => Orders, (order) => order.items)
+export class OrderItems extends BaseTimestampEntity{
+  @ManyToOne(() => Orders, (order) => order.items, { 
+    onDelete: 'CASCADE' 
+  })
   order: Orders
 
-  @ManyToOne(() => MovieSchedules, (movieSchedule) => movieSchedule.orderItems)
+  @ManyToOne(() => MovieSchedules, (movieSchedule) => movieSchedule.orderItems, { 
+    onDelete: 'CASCADE' 
+  })
   movieSchedule: MovieSchedules
 
   @Column({name: 'qty', type: 'int'})
@@ -24,13 +26,4 @@ export class OrderItems {
 
   @Column({name: 'snapshot', type: 'text'})
   snapshot: string
-
-  @CreateDateColumn({ name: 'created_at'})
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: Date;
 }

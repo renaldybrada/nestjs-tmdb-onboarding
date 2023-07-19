@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { Users } from '../users/users.entity';
 import { OrderItems } from './orderItems.entity';
+import { BaseTimestampEntity } from '../base.entity';
 
 export enum PaymenMethod {
     CASH = 'cash',
@@ -10,14 +11,15 @@ export enum PaymenMethod {
 }
 
 @Entity()
-export class Orders {
-  @PrimaryGeneratedColumn()
-  id: number
-
-  @ManyToOne(() => Users, (user) => user.orders)
+export class Orders extends BaseTimestampEntity{
+  @ManyToOne(() => Users, (user) => user.orders, { 
+    onDelete: 'CASCADE' 
+  })
   user: Users
 
-  @OneToMany(() => OrderItems, (items) => items.order)
+  @OneToMany(() => OrderItems, (items) => items.order, { 
+    onDelete: 'CASCADE'
+  })
   items: OrderItems
 
   @Column({
@@ -30,13 +32,4 @@ export class Orders {
 
   @Column({name: 'total_item_price', type: 'double'})
   totalItemPrice: number
-
-  @CreateDateColumn({ name: 'created_at'})
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: Date;
 }

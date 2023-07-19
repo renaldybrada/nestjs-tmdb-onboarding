@@ -1,11 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { Orders } from '../orders/orders.entity';
+import { BaseTimestampEntity } from '../base.entity';
 
 @Entity()
-export class Users {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Users extends BaseTimestampEntity{
   @Column()
   name: string;
 
@@ -15,21 +13,12 @@ export class Users {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
-  @Column({ name: 'is_admin'})
+  @Column({ name: 'is_admin', type: 'boolean', default: false })
   isAdmin: boolean;
 
   @OneToMany(() => Orders, (order) => order.user)
   orders: Orders[]
-
-  @CreateDateColumn({ name: 'created_at'})
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: Date;
 }

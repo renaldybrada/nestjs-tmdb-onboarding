@@ -1,12 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { MovieTags } from './movieTags.entity';
 import { MovieSchedules } from './movieSchedules.entity';
+import { BaseTimestampEntity } from '../base.entity';
 
 @Entity()
-export class Movies {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class Movies extends BaseTimestampEntity{
   @Column()
   title: string;
 
@@ -24,13 +22,4 @@ export class Movies {
 
   @OneToMany(() => MovieSchedules, (movieSchedule) => movieSchedule.movie)
   movieSchedules: MovieSchedules[]
-
-  @CreateDateColumn({ name: 'created_at'})
-  createdAt: Date;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: Date;
-
-  @DeleteDateColumn({ name: 'deleted_at' })
-  deletedAt: Date;
 }
