@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { HttpException, Injectable } from "@nestjs/common";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -45,13 +45,10 @@ export class AuthService {
 
         const registerUser = {
             email: registerDto.email,
-            password: hashedPassword,
-            avatar: registerDto.avatar
+            password: hashedPassword
         }
-
-        console.log(registerUser)
-
-        this.userRepository.save(registerUser)
+        
+        await this.userRepository.save(registerUser)
 
         return registerUser
     }

@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, HttpException, HttpStatus, ParseFilePipe, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('auth')
 export class AuthController {
@@ -15,12 +16,26 @@ export class AuthController {
     }
 
     @Post('register')
-    register(@Body() registerDto: RegisterDto) {
-        const register = this.authService.register(registerDto)
+    @UseInterceptors(FileInterceptor('avatar'))
+    async register(
+        @Body() registerDto: RegisterDto,
+        avatar: Express.Multer.File
+    ) {
+        console.log(avatar)
 
-        return {
-            msg: 'success create user',
-            data: register
+        try {
+            const register = await this.authService.register(registerDto)
+            
+            return {
+                msg: 'success create user',
+                data: register
+            }
+        } catch (error) {
+            throw new HttpException({
+                code: 500,
+                status: 'error',
+                message: error.code
+            }, HttpStatus.INTERNAL_SERVER_ERROR)
         }
     }
 }

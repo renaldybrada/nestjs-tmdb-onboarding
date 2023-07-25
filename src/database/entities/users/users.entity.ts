@@ -1,8 +1,9 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, Unique } from 'typeorm';
 import { Orders } from '../orders/orders.entity';
 import { BaseTimestampEntity } from '../base.entity';
 
 @Entity()
+@Unique(['email'])
 export class Users extends BaseTimestampEntity{
   @Column()
   name: string;
