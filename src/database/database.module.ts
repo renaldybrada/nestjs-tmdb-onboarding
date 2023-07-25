@@ -12,6 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: 'nestjs_tutorial',
         entities: ['dist/database/**/*.entity.js'],
         synchronize: true,
-      }),]
+      })
+    ]
   })
   export class DatabaseModule {}
