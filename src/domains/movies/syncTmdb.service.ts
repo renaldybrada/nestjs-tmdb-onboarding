@@ -1,14 +1,35 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron, CronExpression } from '@nestjs/schedule';
+import { FetchTmdbApiService } from "./fetchTmdbApi.service";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Movies } from 'src/database/entities/movies/movies.entity';
+import { Repository } from 'typeorm';
+import { map } from 'rxjs';
 
 @Injectable()
 export class SyncTmdbService {
   private readonly logger = new Logger(SyncTmdbService.name);
+  
+  constructor(
+    @InjectRepository(Movies)
+    private movieRepository: Repository<Movies>,
+    private readonly fetchTmdbApi: FetchTmdbApiService  
+  ) {}
 
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
-  handleCron() {
-    const tmdbToken:string = process.env.TMDB_TOKEN;
+  @Cron(CronExpression.EVERY_10_SECONDS)
+  async handleCron() {
+    (await this.fetchTmdbApi.nowPlayingList()).pipe(
+      map(res => res.results)
+    ).subscribe(async (movies) => {
+      for (const movie of movies) {
+        const newMovie = this.movieRepository.create({
+          title: movie.original_title,
+          overview: movie.overview,
+          poster: movie.poster_path
+        });
+        await this.movieRepository.save(newMovie);
+      }
+    })
 
-    this.logger.debug(tmdbToken);
   }
 }
