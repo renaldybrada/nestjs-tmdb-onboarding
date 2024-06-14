@@ -21,6 +21,7 @@ export class SyncTmdbService {
     (await this.fetchTmdbApi.nowPlayingList()).pipe(
       map(res => res.results)
     ).subscribe(async (movies) => {
+      // seeding movies from tmdb
       for (const movie of movies) {
         const newMovie = this.movieRepository.create({
           title: movie.original_title,

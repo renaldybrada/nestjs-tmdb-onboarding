@@ -5,6 +5,7 @@ import { HttpModule } from "@nestjs/axios";
 import { FetchTmdbApiService } from "./fetchTmdbApi.service";
 import { Movies } from "src/database/entities/movies/movies.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { MovieService } from "./movies.service";
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
     ],
     controllers: [MoviesController],
     providers: [
+        MovieService,
         FetchTmdbApiService,
         SyncTmdbService
     ],
