@@ -16,7 +16,7 @@ export class SyncTmdbService {
     private readonly fetchTmdbApi: FetchTmdbApiService  
   ) {}
 
-  @Cron(CronExpression.EVERY_10_SECONDS)
+  @Cron(CronExpression.EVERY_HOUR)
   async handleCron() {
     (await this.fetchTmdbApi.nowPlayingList()).pipe(
       map(res => res.results)
