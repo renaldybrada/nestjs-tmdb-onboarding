@@ -26,7 +26,8 @@ export class SyncTmdbService {
         const newMovie = this.movieRepository.create({
           title: movie.original_title,
           overview: movie.overview,
-          poster: movie.poster_path
+          poster: movie.poster_path,
+          id: movie.id
         });
         await this.movieRepository.save(newMovie);
       }

@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, Unique } from 'typeorm';
 import { MovieTags } from './movieTags.entity';
 import { MovieSchedules } from './movieSchedules.entity';
 import { BaseTimestampEntity } from '../base.entity';
@@ -16,6 +16,9 @@ export class Movies extends BaseTimestampEntity{
 
   @Column({ name: 'play_until'})
   playUntil: string;
+
+  @Column({ name: 'tmdb_id'})
+  tmdbId: number;
 
   @OneToMany(() => MovieTags, (movieTags) => movieTags.movies)
   movieTags: MovieTags[]
