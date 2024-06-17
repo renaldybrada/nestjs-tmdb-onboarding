@@ -39,12 +39,15 @@ export class AuthService {
         return response
     }
 
-    async register(registerDto: RegisterDto) {
+    async register(avatar: Express.Multer.File, registerDto: RegisterDto) {
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(registerDto.password, saltOrRounds)
+        console.log('inside service ', avatar.path)
 
         const registerUser = {
+            name: registerDto.name,
             email: registerDto.email,
+            avatar: avatar.path,
             password: hashedPassword
         }
         
