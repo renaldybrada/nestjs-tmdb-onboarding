@@ -19,11 +19,10 @@ export class UpdateMovieService{
     ){}
 
     async handleUpdateMovie(id: number, updateMovieDto: UpdateMovieDto) {
+        let selectedMovie = await this.movieRepository.findOneBy({'id': id});
+        if (selectedMovie == undefined) throw new HttpException('movie not found', 400);
+        
         try {
-            let selectedMovie = await this.movieRepository.findOneBy({'id': id});
-
-            if (selectedMovie == undefined) throw new HttpException('movie not found', 400);
-
             console.log(selectedMovie)
 
             selectedMovie.title = updateMovieDto.title;
