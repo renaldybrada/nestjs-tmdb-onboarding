@@ -16,6 +16,12 @@ export class MovieSchedules extends BaseTimestampEntity{
   }) 
   studio: Studios
 
+  @Column({name: 'price', type: 'int'})
+  price: number
+
+  @Column({name: 'date', type: 'datetime'})
+  date: Date
+
   @OneToMany(() => OrderItems, (orderItems) => orderItems.movieSchedule)
   orderItems: OrderItems[]
 
