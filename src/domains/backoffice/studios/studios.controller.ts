@@ -1,6 +1,8 @@
-import { Controller, Get, Post } from "@nestjs/common";
+import { Controller, Get, Post, UseGuards } from "@nestjs/common";
+import { IsAdminGuard } from "src/domains/auth/isAdmin.guard";
 
 @Controller('api/v1/backoffice/studios')
+@UseGuards(IsAdminGuard)
 export class BackOfficeStudioController {
     constructor() {}
 

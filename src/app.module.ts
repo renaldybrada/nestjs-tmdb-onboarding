@@ -8,6 +8,8 @@ import { diskStorage } from "multer";
 import { extname } from 'path';
 import { BackofficeModule } from './domains/backoffice/backoffice.module';
 import { TransactionsModule } from './domains/transactions/transactions.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from './domains/auth/auth.guard';
 
 @Module({
   imports: [
@@ -20,6 +22,12 @@ import { TransactionsModule } from './domains/transactions/transactions.module';
     MulterModule.register({
         dest: './uploads'
     }),
+  ],
+  providers: [
+    { // simple checking authorization
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
   ]
 })
 export class AppModule {}

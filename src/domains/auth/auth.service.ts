@@ -6,6 +6,7 @@ import { Users } from "src/database/entities/users/users.entity";
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { JwtService } from "@nestjs/jwt";
+import { jwtConstants } from "./auth.const";
 
 @Injectable()
 export class AuthService {
@@ -27,7 +28,9 @@ export class AuthService {
             const passwordIsMatch = await bcrypt.compare(loginDto.password, user.password)
             if (passwordIsMatch) {
                 const payload = {email: user.email, name: user.name, is_admin: user.isAdmin}
-                const token = await this.jwtService.signAsync(payload)
+                const token = await this.jwtService.signAsync(payload, {
+                    secret: jwtConstants.secret
+                })
                 response = {
                     'code': 200,
                     'msg': 'success login',

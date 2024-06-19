@@ -3,11 +3,13 @@ import { AuthService } from "./auth.service";
 import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Public } from "./public.decorators";
 
 @Controller('api/v1/auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
 
+    @Public()
     @Post('login')
     login(@Body() loginDto: LoginDto) {
         const login = this.authService.login(loginDto)
@@ -15,15 +17,16 @@ export class AuthController {
         return login
     }
 
+    @Public()
     @Post('register')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('avatar'))
     async register(
-        @UploadedFile() file: Express.Multer.File,
+        @UploadedFile() avatar: Express.Multer.File,
         @Body() registerDto: RegisterDto,
     ) {
         try {
-            console.log('inside controller ', file.path)
-            const register = await this.authService.register(file, registerDto)
+            console.log('inside controller ', avatar.path)
+            const register = await this.authService.register(avatar, registerDto)
             
             return {
                 msg: 'success create user',
