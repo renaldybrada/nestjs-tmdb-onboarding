@@ -3,7 +3,6 @@ import { Orders } from '../orders/orders.entity';
 import { BaseTimestampEntity } from '../base.entity';
 
 @Entity()
-@Unique(['email'])
 export class Users extends BaseTimestampEntity{
   @Column()
   name: string;

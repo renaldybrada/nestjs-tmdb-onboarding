@@ -16,7 +16,7 @@ export class SyncTmdbService {
     private readonly fetchTmdbApi: FetchTmdbApiService  
   ) {}
 
-  @Cron(CronExpression.EVERY_HOUR)
+  @Cron(CronExpression.EVERY_5_HOURS)
   async handleCron() {
     (await this.fetchTmdbApi.nowPlayingList()).pipe(
       map(res => res.results)
@@ -27,7 +27,7 @@ export class SyncTmdbService {
           title: movie.original_title,
           overview: movie.overview,
           poster: movie.poster_path,
-          id: movie.id
+          tmdbId: movie.id
         });
         await this.movieRepository.save(newMovie);
       }
