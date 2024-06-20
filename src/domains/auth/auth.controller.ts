@@ -4,6 +4,8 @@ import { LoginDto } from "./dto/login.dto";
 import { RegisterDto } from "./dto/register.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Public } from "./public.decorators";
+import { diskStorage } from "multer";
+import { extname } from "path";
 
 @Controller('api/v1/auth')
 export class AuthController {
@@ -19,7 +21,15 @@ export class AuthController {
 
     @Public()
     @Post('register')
-    @UseInterceptors(FileInterceptor('avatar'))
+    @UseInterceptors(FileInterceptor('avatar', {
+        storage: diskStorage({
+            destination: './uploads',
+            filename: (req, file, cb) => {
+                const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('')
+                cb(null, `${randomName}${extname(file.originalname)}`)
+            }
+        })
+    }))
     async register(
         @UploadedFile() avatar: Express.Multer.File,
         @Body() registerDto: RegisterDto,
