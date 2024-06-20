@@ -10,6 +10,7 @@ import { BackofficeModule } from './domains/backoffice/backoffice.module';
 import { TransactionsModule } from './domains/transactions/transactions.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './domains/auth/auth.guard';
+import { MiddlewareModule } from './domains/middleware/middleware.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AuthGuard } from './domains/auth/auth.guard';
     MulterModule.register({
         dest: './uploads'
     }),
+    MiddlewareModule
   ],
   providers: [
     { // simple checking authorization
