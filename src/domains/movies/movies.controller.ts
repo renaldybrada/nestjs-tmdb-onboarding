@@ -2,12 +2,16 @@ import { Controller, Get, Query } from "@nestjs/common";
 import { FetchTmdbApiService } from "./fetchTmdbApi.service";
 import { MovieService } from "./movies.service";
 import { MovieListDto } from "./dto/movieList.dto";
+import { QueueService } from "./queue/queue.service";
+import { Public } from "../auth/public.decorators";
+import { map } from 'rxjs';
 
 @Controller('api/v1/movies')
 export class MoviesController {
     constructor (
         private readonly fetchTmdbApi: FetchTmdbApiService, 
-        private movieService: MovieService
+        private movieService: MovieService,
+        private readonly queueService: QueueService
     ) {}
 
     @Get('')
@@ -16,7 +20,20 @@ export class MoviesController {
     }
 
     @Get('tmdb')
-    movieListTmdb() {
-        return this.fetchTmdbApi.nowPlayingList();
+    @Public()
+    async movieListTmdb() {
+        var tmdbMovies = await this.fetchTmdbApi.nowPlayingList();
+        
+        tmdbMovies.pipe(
+            map(res => res.results)
+          ).subscribe(async (movies) => {
+            for (const movie of movies) {
+                await this.queueService.addJob(movie.original_title);
+            }
+        })
+
+        return {
+            msg: 'job queued'
+        }
     }
 }
