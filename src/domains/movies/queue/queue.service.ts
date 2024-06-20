@@ -16,5 +16,6 @@ export class QueueService {
         console.log('add job', data);
         
         await this.delayedJob(2000);
+        console.log('==================');
     }
 }
