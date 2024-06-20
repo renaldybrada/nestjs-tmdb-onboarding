@@ -3,6 +3,7 @@ import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Tags } from "src/database/entities/movies/tags.entity";
 import { BackOfficeTagsController } from "./tags.controller";
+import { TagsService } from "./tags.service";
 
 @Module({
     imports: [
@@ -11,6 +12,9 @@ import { BackOfficeTagsController } from "./tags.controller";
     ],
     controllers: [
         BackOfficeTagsController
+    ],
+    providers: [
+        TagsService
     ]
 })
 export class BackOfficeTagsModule {}
