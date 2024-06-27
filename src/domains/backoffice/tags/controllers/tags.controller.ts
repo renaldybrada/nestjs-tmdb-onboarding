@@ -1,9 +1,6 @@
 import { Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Tags } from "src/database/entities/movies/tags.entity";
-import { IsAdminGuard } from "src/domains/auth/isAdmin.guard";
-import { Repository } from "typeorm";
-import { TagsService } from "./tags.service";
+import { IsAdminGuard } from "src/domains/auth/guards/isAdmin.guard";
+import { TagsService } from "../services/tags.service";
 
 @Controller('api/v1/backoffice/tags')
 @UseGuards(IsAdminGuard)

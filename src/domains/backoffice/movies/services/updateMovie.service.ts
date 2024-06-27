@@ -2,7 +2,7 @@ import { HttpException, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Movies } from "src/database/entities/movies/movies.entity";
 import { In, Repository } from "typeorm";
-import { UpdateMovieDto } from "./dto/updateMovie.dto";
+import { UpdateMovieDto } from "../dto/updateMovie.dto";
 import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 import { Tags } from "src/database/entities/movies/tags.entity";
 import { MovieTags } from "src/database/entities/movies/movieTags.entity";

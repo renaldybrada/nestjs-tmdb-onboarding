@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { IsAdminGuard } from "src/domains/auth/isAdmin.guard";
-import { AddMovieScheduleDto } from "./dto/addMovieSchedule.dto";
-import { ScheduleMovieService } from "./schedules.service";
+import { IsAdminGuard } from "src/domains/auth/guards/isAdmin.guard";
+import { AddMovieScheduleDto } from "../dto/addMovieSchedule.dto";
+import { ScheduleMovieService } from "../services/schedules.service";
 
 @Controller('api/v1/backoffice/movies/schedule')
 @UseGuards(IsAdminGuard)

@@ -1,9 +1,9 @@
 import { Body, Controller, HttpException, HttpStatus, ParseFilePipe, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { LoginDto } from "./dto/login.dto";
-import { RegisterDto } from "./dto/register.dto";
+import { AuthService } from "../services/auth.service";
+import { LoginDto } from "../dto/login.dto";
+import { RegisterDto } from "../dto/register.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { Public } from "./public.decorators";
+import { Public } from "../decorators/public.decorators";
 import { diskStorage } from "multer";
 import { extname } from "path";
 
@@ -35,7 +35,6 @@ export class AuthController {
         @Body() registerDto: RegisterDto,
     ) {
         try {
-            console.log('inside controller ', avatar.path)
             const register = await this.authService.register(avatar, registerDto)
             
             return {

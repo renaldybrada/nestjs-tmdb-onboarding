@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Put, Query, UseGuards, UseInterceptors } from "@nestjs/common";
-import { IsAdminGuard } from "src/domains/auth/isAdmin.guard";
+import { IsAdminGuard } from "src/domains/auth/guards/isAdmin.guard";
 import { MovieListDto } from "src/domains/movies/dto/movieList.dto";
-import { MovieService } from "src/domains/movies/movies.service";
-import { UpdateMovieDto } from "./dto/updateMovie.dto";
-import { UpdateMovieService } from "./updateMovie.service";
+import { MovieService } from "src/domains/movies/services/movies.service";
+import { UpdateMovieDto } from "../dto/updateMovie.dto";
+import { UpdateMovieService } from "../services/updateMovie.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller('api/v1/backoffice/movies')

@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from "@nestjs/common";
-import { FetchTmdbApiService } from "./fetchTmdbApi.service";
-import { MovieService } from "./movies.service";
-import { MovieListDto } from "./dto/movieList.dto";
-import { QueueService } from "./queue/queue.service";
-import { Public } from "../auth/public.decorators";
+import { FetchTmdbApiService } from "../services/fetchTmdbApi.service";
+import { MovieService } from "../services/movies.service";
+import { MovieListDto } from "../dto/movieList.dto";
+import { QueueService } from "../queue/queue.service";
+import { Public } from "../../auth/decorators/public.decorators";
 import { map } from 'rxjs';
 
 @Controller('api/v1/movies')

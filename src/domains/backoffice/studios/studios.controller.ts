@@ -1,5 +1,5 @@
 import { Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { IsAdminGuard } from "src/domains/auth/isAdmin.guard";
+import { IsAdminGuard } from "src/domains/auth/guards/isAdmin.guard";
 
 @Controller('api/v1/backoffice/studios')
 @UseGuards(IsAdminGuard)

@@ -6,7 +6,7 @@ import { ExceptionsHandler } from "@nestjs/core/exceptions/exceptions-handler";
 import { Tags } from "src/database/entities/movies/tags.entity";
 import { MovieTags } from "src/database/entities/movies/movieTags.entity";
 import { MovieSchedules } from "src/database/entities/movies/movieSchedules.entity";
-import { AddMovieScheduleDto } from "./dto/addMovieSchedule.dto";
+import { AddMovieScheduleDto } from "../dto/addMovieSchedule.dto";
 import { Studios } from "src/database/entities/studios/studios.entity";
 
 @Injectable() 

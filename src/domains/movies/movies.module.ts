@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
-import { MoviesController } from "./movies.controller";
-import { SyncTmdbService } from "./syncTmdb.service";
+import { MoviesController } from "./controllers/movies.controller";
+import { SyncTmdbService } from "./services/syncTmdb.service";
 import { HttpModule } from "@nestjs/axios";
-import { FetchTmdbApiService } from "./fetchTmdbApi.service";
+import { FetchTmdbApiService } from "./services/fetchTmdbApi.service";
 import { Movies } from "src/database/entities/movies/movies.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { MovieService } from "./movies.service";
+import { MovieService } from "./services/movies.service";
 import { BullModule } from "@nestjs/bull";
 import { QueueService } from "./queue/queue.service";
 import { QueueProcessor } from "./queue/queue.processor";
